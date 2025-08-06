@@ -27,12 +27,9 @@ int main(int argc, char* argv[]){
         parser.parse_config(input, config); // parse configuration settings
 
         std::printf("\n***\nLoading basis module...\n\n");
-
-        // for (const auto& pair : config) {
-        //     std::cout << pair.first << pair.second << '\n';
-        // }
-
-        Molecule mol(input, config["basis:"], parser); // parses %molecule input and generates molecule object
+        
+        Molecule mol;
+        parser.parse_molecule(input, config["basis:"], mol); // take in molecule object and directly construct Molecule
         // mol.printMolecule();
 
     } catch (std::invalid_argument &e) {

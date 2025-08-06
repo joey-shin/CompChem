@@ -10,27 +10,6 @@
 
 using namespace std;
 
-/*
-void Parser::parse_input(string &input, map<string, string> &config, int &charge, int &spin, vector<string> &atoms, vector<arma::vec> &coords) {
-    ifstream file(input);
-    if (!file.is_open()) {
-        throw invalid_argument("Could not open input file: " + input);
-    }
-
-    string line;
-    
-    while (getline(file, line)){
-        if (line.find("%config") != string::npos) {
-            parse_config(file, config);
-            continue;
-        } else if (line.find("%molecule") != string::npos){
-            parse_molecule(file, charge, spin, atoms, coords);
-            continue;
-        }
-    }
-}
-*/
-
 void Parser::parse_config(ifstream &file, map<string, string> &config) { // parse %config settings
     string line;
     while (getline(file, line)) {
@@ -91,20 +70,23 @@ void Parser::parse_config(string &input, map<string, string> &config) { // publi
 }
 
 
-void Parser::parse_molecule(string &input, int &charge, int &spin, vector<string> &atoms, vector<arma::vec> &Rs) { // public invocation of parse_molecule
+void Parser::parse_molecule(string &input, std::string &basis, Molecule &mol) { // public invocation of parse_molecule
     ifstream file(input);
     if (!file.is_open()) {
         throw invalid_argument("Could not open input file: " + input);
     }
 
     string line;
+    vector<string> atoms;
+    vector<arma::vec> Rs;
     while (getline(file, line)) {
         if (line.find("%molecule") != string::npos) {
-            parse_molecule(file, charge, spin, atoms, Rs);
+            parse_molecule(file, mol.charge, mol.spin, atoms, Rs);
         }
     }
+    string basis_file = "basis/basis/" + basis + ".bas";
+    parse_basis(basis_file, atoms, Rs, mol);
 }
-
 
 
 const std::map<std::string, int> SYMBOL_MAP {

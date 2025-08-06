@@ -5,7 +5,6 @@
 #include <armadillo>
 #include <vector>
 
-class Parser;
 
 struct AO { // Each AO (cGTO) contains Contraction Coeff (d) and Gauss Exp (alpha) of pGTOs
     AO(const int &K, const arma::vec &R, const arma::vec &alphas, const arma::vec &ds, const arma::uvec &lmn)
@@ -27,7 +26,6 @@ struct Atom {
 };
 
 struct Molecule {
-    Molecule(std::string &input, std::string &basis, Parser &parser);
     std::vector<Atom> Atoms;
     int e;
     int charge;
