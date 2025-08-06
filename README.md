@@ -12,8 +12,9 @@
 
 ```
 %config
-basis [basis]
-method [method]
+job: [job]
+basis: [basis]
+...
 %end
 
 %molecule
